@@ -71,36 +71,6 @@ export default function Home() {
     setQuery('');
 
     try {
-      // append the file to the form data
-      const formData = new FormData();
-      if (uploadedFile) {
-        formData.append('file', uploadedFile);
-      } else {
-        throw new Error('No file uploaded - Maybe reload and try again?');
-      }
-      // also append question and history
-
-      const isUserFirstMessage = history.length === 0;
-
-      let fileName: string = '';
-      let uploadRes;
-
-      if (isUserFirstMessage) {
-        const response = await fetch('/api/upload', {
-          method: 'POST',
-          body: formData,
-        });
-        const uploadData = await response.json();
-
-        if (uploadData.error) {
-          throw new Error(uploadData.error);
-        }
-
-        setNameSpace(uploadData.nameSpace);
-        fileName = uploadData.nameSpace as string;
-        uploadRes = uploadData;
-      }
-
       const response = await fetch('/api/chat', {
         method: 'POST',
         headers: {
@@ -108,7 +78,6 @@ export default function Home() {
         },
         body: JSON.stringify({
           question,
-          nameSpace: !!nameSpace ? nameSpace : uploadRes.nameSpace,
           history,
         }),
       });
@@ -332,10 +301,10 @@ export default function Home() {
                 </form>
               </div>
             </div>
-            {error || !uploadedFile ? (
+            {error ? (
               <div className="border border-red-400 rounded-md p-4">
                 <p className="text-red-500">
-                  {error ? `${error} - Please try again later or use a different file` : 'Please upload your file first to proceed'}
+                  {error}
                 </p>
               </div>
             ) : null}
