@@ -35,9 +35,13 @@ export default async function handler(
   
   try {
     const pineconeClient = pinecone;
+
+    if (!process.env.PINECONE_NAME_SPACE) {
+      throw new Error('No namespace provided');
+    }
     
     //create chain for conversational AI
-    const chain = await makeChain(pineconeClient, nameSpace);
+    const chain = await makeChain(pineconeClient, nameSpace || process.env.PINECONE_NAME_SPACE);
     
     //Ask a question using chat history
     // OpenAI recommends replacing newlines with spaces for best results
