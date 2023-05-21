@@ -27,6 +27,7 @@ export const run = async () => {
     });
 
     const docs = await textSplitter.splitDocuments(rawDocs);
+    console.log('DOCS', docs);
 
     console.log('creating vector store...');
     /*create and store the embeddings in the vectorStore*/
@@ -36,7 +37,7 @@ export const run = async () => {
     //embed the PDF documents
     await PineconeStore.fromDocuments(docs, embeddings, {
       pineconeIndex: index,
-      namespace: PINECONE_NAME_SPACE,
+      namespace: process.env.PINECONE_NAME_SPACE || 'ingest-no-namespace',
       textKey: 'text',
     });
   } catch (error) {
