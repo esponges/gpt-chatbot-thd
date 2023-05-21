@@ -134,17 +134,17 @@ export default function Home() {
       <Layout>
         <div className="mx-auto flex flex-col gap-4">
           <div className='w-[75vw]'>
-            <h1 className="text-3xl my-6 font-bold leading-[1.1] tracking-tighter text-center">
+            <h1 className="text-3xl my-6 font-bold leading-[1.1] tracking-tighter text-center text-white">
               {uploadedFile && uploadedFile.name ? (
                 <span className="text-blue-600">
                   Chat about the uploaded{' '}
                   <span className="underline">{uploadedFile.name}</span> file
                 </span>
               ) : (
-                'Chat about any uploaded document'
+                'Chat about THD\'s 2022 financial results'
               )}
             </h1>
-            <div className="pl-4">
+            {/* <div className="pl-4">
               <input
                 type="file"
                 name="file"
@@ -170,7 +170,7 @@ export default function Home() {
                   {uploadedFile.name} uploaded
                 </p>
               ) : null}
-            </div>
+            </div> */}
           </div>
           <main className={styles.main}>
             <div className={styles.cloud}>
@@ -182,7 +182,7 @@ export default function Home() {
                     icon = (
                       <Image
                         key={index}
-                        src="/bot-image.png"
+                        src="/homer.png"
                         alt="AI"
                         width="40"
                         height="40"
@@ -269,9 +269,7 @@ export default function Home() {
                     placeholder={
                       loading
                         ? 'Waiting for response...'
-                        : uploadedFile?.name
-                        ? `Ask a question about ${uploadedFile.name}`
-                        : 'Upload a document first'
+                        : 'Ask something to Homer first!'
                     }
                     value={query}
                     /* dont set vals, use the form values so we do not rerender at every keystroke */
@@ -310,14 +308,6 @@ export default function Home() {
             ) : null}
           </main>
         </div>
-        <footer className="m-auto p-4 text-xs w-[50vw]">
-          Powered by LangChainAI and gpt3-5. Demo built on top of
-          <a href="https://twitter.com/mayowaoshin">@mayowaoshin </a> initial
-          project and adapted by{' '}
-          <a href="https://fer-toasted.vercel.app/" className="text-blue-500">
-            esponges
-          </a> for the parse & upload to vector store feature.
-        </footer>
       </Layout>
     </>
   );
